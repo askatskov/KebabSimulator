@@ -10,6 +10,10 @@ namespace Kebab_Simulator.Data
 {
     public class KebabSimulatorContext : DbContext
     {
+        public KebabSimulatorContext(DbContextOptions<KebabSimulatorContext> options) : base(options)
+        {
+
+        }
         public DbSet<Kebab> Kebabs { get; set; }
     }
 }
