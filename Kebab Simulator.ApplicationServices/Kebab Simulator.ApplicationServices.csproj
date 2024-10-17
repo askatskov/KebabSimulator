@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Kebab Simulator.Data\Kebab Simulator.Data.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kebab_Simulator.Core.Domain
+namespace Kebab_Simulator.Core.Domain.Dto
 {
     public enum KebabType
     {
@@ -29,8 +29,12 @@ namespace Kebab_Simulator.Core.Domain
         public DateTime KebabStart { get; set; }
         public DateTime KebabDone { get; set; }
         public int KebabStatus { get; set; }
-
+        
+        /*
+        public List<IFormFile> Files { get; set; }
+        public IEnumerable<FileToDatabaseDto> Image { get; set; } = new List<FileToDatabaseDto>();
         //db only
+        */
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
