@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kebab Simulator", "Kebab Simulator\Kebab Simulator.csproj", "{0B617EBA-9AB8-45F7-8AB8-4DA32B82B205}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kebab Simulator.Core", "Kebab Simulator.Core\Kebab Simulator.Core.csproj", "{416E0F8F-6628-4967-AD05-18D9B31BAD43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kebab Simulator.ApplicationServices", "Kebab Simulator.ApplicationServices\Kebab Simulator.ApplicationServices.csproj", "{98D0440B-088B-4C44-85CE-F47144919F72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kebab Simulator.Data", "Kebab Simulator.Data\Kebab Simulator.Data.csproj", "{FA32AD11-58F6-4A76-BDB4-BA4D4030CE6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B617EBA-9AB8-45F7-8AB8-4DA32B82B205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B617EBA-9AB8-45F7-8AB8-4DA32B82B205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B617EBA-9AB8-45F7-8AB8-4DA32B82B205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B617EBA-9AB8-45F7-8AB8-4DA32B82B205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{416E0F8F-6628-4967-AD05-18D9B31BAD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416E0F8F-6628-4967-AD05-18D9B31BAD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416E0F8F-6628-4967-AD05-18D9B31BAD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416E0F8F-6628-4967-AD05-18D9B31BAD43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98D0440B-088B-4C44-85CE-F47144919F72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D0440B-088B-4C44-85CE-F47144919F72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D0440B-088B-4C44-85CE-F47144919F72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D0440B-088B-4C44-85CE-F47144919F72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA32AD11-58F6-4A76-BDB4-BA4D4030CE6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA32AD11-58F6-4A76-BDB4-BA4D4030CE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA32AD11-58F6-4A76-BDB4-BA4D4030CE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA32AD11-58F6-4A76-BDB4-BA4D4030CE6F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C320C38F-7221-4DB8-9460-0F8E4EAA199F}
+	EndGlobalSection
+EndGlobal
