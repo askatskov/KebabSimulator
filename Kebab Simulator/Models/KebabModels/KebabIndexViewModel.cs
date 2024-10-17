@@ -19,7 +19,7 @@
         public KebabFoods KebabFoods { get; set; }
         public KebabType KebabType { get; set; }
         public int Checkout { get; set; }
-        public int BankAccount { get; set; }
+        public int KebabBankAccount { get; set; }
         public DateTime KebabStart { get; set; }
         public DateTime KebabDone { get; set; }
         public int KebabStatus { get; set; }

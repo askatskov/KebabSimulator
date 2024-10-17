@@ -1,1 +1,36 @@
-﻿@*
+﻿@model IEnumerable<Kebab_Simulator.Models.KebabModels.KebabIndexViewModel>
+
+@{ int rowNumber = 1; }
+<div><a asp-action="Add" asp-controller="Kebab" type="submit" class="btn btn-primary">Go make a kebab to earn money</a></div>
+
+@* User can go and make a kebab using ADD function, to earn money. In controller, this is called "PlayerSoloMission" *@
+
+<div class="h1">Your money: </div>
+<form method="post">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Level</th>
+                <th scope="col">KebabBankAccount</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Kebab in Model)
+            {
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@Kebab.KebabName</td>
+                    <td>@Kebab.KebabLevel</td>
+                    <td>@Kebab.KebabBankAccount</td>
+                    <td>@Kebab.KebabStatus</td>
+
+                </tr>
+                rowNumber++;
+            }
+        </tbody>
+    </table>
+</form>
