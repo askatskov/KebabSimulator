@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Kebab Simulator.ApplicationServices\Kebab Simulator.ApplicationServices.csproj" />
     <ProjectReference Include="..\Kebab Simulator.Data\Kebab Simulator.Data.csproj" />
   </ItemGroup>
 

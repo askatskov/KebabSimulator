@@ -1,9 +1,12 @@
+using Kebab_Simulator.ApplicationServices.Services;
+using Kebab_Simulator.Core.Domain.Serviceinterface;
 using Kebab_Simulator.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IKebabSimulatorServices, KebabServices>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<KebabSimulatorContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

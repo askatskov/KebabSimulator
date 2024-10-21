@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace Kebab_Simulator.Core.Domain.Dto
     {
         tortilla, fries, kebab, salad, veggies, falafel, specialsauce
     }
-    public class Kebab
+    public class KebabDto
     {
         public Guid ID { get; set; }
 
@@ -30,11 +31,11 @@ namespace Kebab_Simulator.Core.Domain.Dto
         public DateTime KebabDone { get; set; }
         public int KebabStatus { get; set; }
         
-        /*
+        
         public List<IFormFile> Files { get; set; }
-        public IEnumerable<FileToDatabaseDto> Image { get; set; } = new List<FileToDatabaseDto>();
+        public IEnumerable<FileToDatabaseDto> Image {  get; set; } = new List<FileToDatabaseDto>();
         //db only
-        */
+        
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
