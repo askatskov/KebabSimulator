@@ -39,9 +39,9 @@ namespace Kebab_Simulator.ApplicationServices.Services
                             ImageTitle = image.FileName,
                             KebabID = domain.ID,
                         };
-                            image.CopyTo( target );
+                        image.CopyTo(target);
                         files.ImageData = target.ToArray();
-                        _context.FilesToDatabase.Add( files );
+                        _context.FilesToDatabase.Add(files);
                     }
                 }
             }
