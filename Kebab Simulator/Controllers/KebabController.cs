@@ -32,5 +32,11 @@ namespace Kebab_Simulator.Controllers
                 });
             return View(resultingInventory);
         }
+        [HttpPost]
+        public IActionResult Create()
+        {
+            KebabCreateViewModel vm = new();
+            return View("Create", vm);
+        }
     }
 }
