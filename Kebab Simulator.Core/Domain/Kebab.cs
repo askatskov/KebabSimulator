@@ -14,6 +14,10 @@ namespace Kebab_Simulator.Core.Domain
     {
         tortilla, fries, kebab, salad, veggies, falafel, specialsauce
     }
+    public enum KebabStatus
+    {
+        Making, Done
+    }
     public class Kebab
     {
         public Guid ID { get; set; }
@@ -28,7 +32,7 @@ namespace Kebab_Simulator.Core.Domain
         public int KebabBankAccount { get; set; }
         public DateTime KebabStart { get; set; }
         public DateTime KebabDone { get; set; }
-        public int KebabStatus { get; set; }
+        public KebabStatus KebabStatus { get; set; }
 
         //db only
 

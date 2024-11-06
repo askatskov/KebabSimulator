@@ -1,4 +1,5 @@
-﻿using Kebab_Simulator.Core.Domain.Serviceinterface;
+﻿using Kebab_Simulator.Core.Domain.Dto;
+using Kebab_Simulator.Core.Domain.Serviceinterface;
 using Kebab_Simulator.Data;
 using Kebab_Simulator.Models.KebabModels;
 using Microsoft.AspNetCore.Mvc;
@@ -26,17 +27,53 @@ namespace Kebab_Simulator.Controllers
                     ID = x.ID,
                     KebabName = x.KebabName,
                     KebabLevel = x.KebabLevel,
-                    KebabBankAccount = x.KebabBankAccount,
-                    KebabStatus = x.KebabStatus,
-                    KebabType = (KebabType)x.KebabType,
+                    KebabType = (Models.KebabModels.KebabType)x.KebabType,
                 });
             return View(resultingInventory);
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Create()
         {
             KebabCreateViewModel vm = new();
             return View("Create", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(KebabCreateViewModel vm)
+        {
+            var dto = new KebabDto()
+            {
+                KebabName = vm.KebabName,
+                KebabXP = 0,
+                KebabXPNextLevel = 100,
+                KebabLevel = 0,
+                KebabType = (Core.Domain.Dto.KebabType)vm.KebabType,
+                KebabStatus = (Core.Domain.Dto.KebabStatus)vm.KebabStatus,
+                KebabBankAccount = vm.KebabBankAccount,
+                Checkout = vm.Checkout,
+                KebabStart = vm.KebabStart,
+                KebabDone = vm.KebabDone,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                Files = vm.Files,
+                Image = vm.Image
+                .Select(x => new FileToDatabaseDto
+                {
+                    ID = x.ImageID,
+                    ImageData = x.ImageData,
+                    ImageTitle = x.ImageTitle,
+                    KebabID = x.KebabID,
+                }).ToArray()
+
+
+            };
+            var result = await _KebabSimulatorServices.Create(dto);
+
+            if (result != null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

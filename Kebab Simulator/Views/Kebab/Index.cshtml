@@ -16,9 +16,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Status</th>
+                <th scope="col">Type</th>
                 <th scope="col">Level</th>
-                <th scope="col">KebabBankAccount</th>
                 
             </tr>
         </thead>
@@ -28,9 +27,14 @@
                 <tr>
                     <td>@rowNumber</td>
                     <td>@Kebab.KebabName</td>
+                    <td>@Kebab.KebabType</td>
                     <td>@Kebab.KebabLevel</td>
-                    <td>@Kebab.KebabBankAccount</td>
-                    <td>@Kebab.KebabStatus</td>
+                    @*<td>
+                       @foreach (var image in Model.Image)
+                        {
+                            <partial name="_Images" model="images" />
+                        }
+                    </td> *@
 
                 </tr>
                 rowNumber++;

@@ -8,6 +8,10 @@
     {
         tortilla, fries, kebab, salad, veggies, falafel, specialsauce
     }
+    public enum KebabStatus
+    {
+        Making, Done
+    }
     public class KebabIndexViewModel
     {
         public Guid ID { get; set; }
@@ -22,7 +26,7 @@
         public int KebabBankAccount { get; set; }
         public DateTime KebabStart { get; set; }
         public DateTime KebabDone { get; set; }
-        public int KebabStatus { get; set; }
+        public KebabStatus KebabStatus { get; set; }
         //pp
 
         public DateTime CreatedAt { get; set; }
