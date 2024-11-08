@@ -12,6 +12,7 @@ namespace Kebab_Simulator.Core.Domain.Serviceinterface
     {
         Task<Kebab> DetailsAsync(Guid id);
         Task<Kebab> Create(KebabDto dto);
+        Task<Kebab> Update(KebabDto dto);
 
     }
 }

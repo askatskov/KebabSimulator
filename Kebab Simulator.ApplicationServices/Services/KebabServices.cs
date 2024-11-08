@@ -65,5 +65,41 @@ namespace Kebab_Simulator.ApplicationServices.Services
             return kebab;
 
         }
+        public async Task<Kebab> Update(KebabDto dto)
+        {
+            Kebab kebab = new Kebab();
+
+            kebab.ID = dto.ID;
+
+            kebab.KebabXP = dto.KebabXP;
+            kebab.KebabXPNextLevel = dto.KebabXPNextLevel;
+            kebab.KebabLevel = 0;
+            kebab.KebabStatus = Core.Domain.KebabStatus.Making;
+            kebab.KebabStart = DateTime.Now;
+            kebab.KebabDone = (DateTime)dto.KebabDone;
+
+            //set by user
+
+            kebab.KebabName = dto.KebabName;
+            kebab.KebabType = (Core.Domain.KebabType)dto.KebabType;
+            kebab.Checkout = dto.Checkout;
+            kebab.KebabBankAccount = dto.KebabBankAccount;
+
+
+            //set for db
+            kebab.CreatedAt = DateTime.Now;
+            kebab.UpdatedAt = DateTime.Now;
+
+            //files
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, kebab);
+            }
+            await _context.Kebabs.AddAsync(kebab);
+            await _context.SaveChangesAsync();
+
+            return kebab;
+
+        }
     }
 }
