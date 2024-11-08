@@ -44,6 +44,7 @@ namespace Kebab_Simulator.ApplicationServices.Services
 
             //set by user
 
+            kebab.KebabName = dto.KebabName;
             kebab.KebabType = (Core.Domain.KebabType)dto.KebabType;
             kebab.Checkout = dto.Checkout;
             kebab.KebabBankAccount = dto.KebabBankAccount;

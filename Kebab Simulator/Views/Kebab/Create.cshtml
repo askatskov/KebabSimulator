@@ -7,9 +7,10 @@
     <input asp-for="KebabXP" value="0" type="hidden" />
     <input asp-for="KebabLevel" value="0" type="hidden" />
     <input asp-for="KebabXPNextLevel" value="100" type="hidden" />
+    <input asp-for="KebabStart" value="Making" type="hidden" />
+    <input asp-for="KebabDone" value="Done" type="hidden" />
     <input asp-for="KebabStatus" value="Making" type="hidden" />
-    <input asp-for="KebabBankAccount" value="0" type="hidden" />
-    <input asp-for="Checkout" value="10" type="hidden" />
+
 
 
     <div class="form-group-row">
@@ -18,27 +19,6 @@
             <input asp-for="KebabName" class="form-control" />
         </div>
     </div>
-
-    <div class="form-group-row">
-        <label asp-for="KebabType" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="KebabType" class="form-control" />
-        </div>
-    </div>
-
-    <div class="form-group-row">
-        <label asp-for="KebabStart" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="KebabStart" class="form-control" />
-        </div>
-    </div>
-
-        <div class="form-group-row">
-            <label asp-for="KebabDone" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="KebabDone" class="form-control" />
-            </div>
-        </div>
         <div class="form-group-row">
             <label asp-for="KebabBankAccount" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
@@ -66,8 +46,8 @@
         </div>
 
     </div>
-    <a asp-action="Create" asp-controller="Kebabs" type="submit"
-    class="btn btn-primary" value="Make Kebab">Create</a>
+        <input asp-action="Create" asp-controller="Kebab" type="submit" class="btn btn-primary" value="Make Kebab" />
+
     <a asp-action="index" class="btn btn-primary">Cancel</a>
 
     </form>

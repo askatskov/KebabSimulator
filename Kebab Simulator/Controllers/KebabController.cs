@@ -3,6 +3,7 @@ using Kebab_Simulator.Core.Domain.Serviceinterface;
 using Kebab_Simulator.Data;
 using Kebab_Simulator.Models.KebabModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 // kebabcontroller controlls all things with kebab
 namespace Kebab_Simulator.Controllers
 {
@@ -37,6 +38,9 @@ namespace Kebab_Simulator.Controllers
             KebabCreateViewModel vm = new();
             return View("Create", vm);
         }
+
+
+
         [HttpPost]
         public async Task<IActionResult> Create(KebabCreateViewModel vm)
         {
@@ -74,6 +78,47 @@ namespace Kebab_Simulator.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public async Task<IActionResult>Details(Guid id)
+        {
+            var kebab = await _KebabSimulatorServices.DetailsAsync(id);
+
+            if (kebab == null)
+            {
+                return NotFound(); // <- TODO; custom partial view with message, kebab is not located
+            }
+
+            var images = await _context.FilesToDatabase
+                .Where(t => t.KebabID == id)
+                .Select(y => new KebabImageViewModel
+                {
+                    KebabID = y.KebabID,
+                    ImageID = y.ID,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64, {0},", Convert.ToBase64String(y.ImageData))
+
+                }).ToArrayAsync();
+
+            var vm = new KebabDetailsViewModel();
+            vm.ID = kebab.ID;
+            vm.KebabName = kebab.KebabName;
+            vm.KebabXP = kebab.KebabXP;
+            vm.KebabXPNextLevel = kebab.KebabXPNextLevel;
+            vm.KebabLevel = kebab.KebabLevel;
+            vm.KebabBankAccount = kebab.KebabBankAccount;
+            vm.Checkout = kebab.Checkout;
+            vm.KebabStart = kebab.KebabStart;
+            vm.KebabDone = kebab.KebabDone;
+            kebab.KebabStatus = Core.Domain.KebabStatus.Making;
+            vm.Image.AddRange(images);
+
+            return View(vm);
+
+            {
+
+            }
         }
     }
 }

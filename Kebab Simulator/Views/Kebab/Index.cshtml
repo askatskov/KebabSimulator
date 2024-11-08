@@ -3,7 +3,7 @@
 @{ int rowNumber = 1; }
 <div>
     <a asp-action="Add" asp-controller="Kebab" type="submit" class="btn btn-primary">Go make a kebab to earn money</a>
-    <a asp-action="Create" asp-controller="Kebab" type="submit" class="btn btn-primary">Make new kebab</a>
+    <a asp-action="Create" asp-controller="Kebab" type="submit" class="btn btn-primary">Make new character</a>
 </div>
 
 
@@ -16,8 +16,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Type</th>
                 <th scope="col">Level</th>
+                <th scope="col">Admin Actions</th>
                 
             </tr>
         </thead>
@@ -27,8 +27,10 @@
                 <tr>
                     <td>@rowNumber</td>
                     <td>@Kebab.KebabName</td>
-                    <td>@Kebab.KebabType</td>
                     <td>@Kebab.KebabLevel</td>
+                    <td>
+                        <a asp-action="details" asp-controller="kebab" asp-route-id="@Kebab.ID" class="btn btn-info">KebabDetails</a>
+                    </td>
                     @*<td>
                        @foreach (var image in Model.Image)
                         {
