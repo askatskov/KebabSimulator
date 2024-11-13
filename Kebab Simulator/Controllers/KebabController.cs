@@ -1,4 +1,5 @@
-﻿using Kebab_Simulator.Core.Domain.Dto;
+﻿using Kebab_Simulator.ApplicationServices.Services;
+using Kebab_Simulator.Core.Domain.Dto;
 using Kebab_Simulator.Core.Domain.Serviceinterface;
 using Kebab_Simulator.Data;
 using Kebab_Simulator.Models.KebabModels;
@@ -13,11 +14,12 @@ namespace Kebab_Simulator.Controllers
 
         private readonly KebabSimulatorContext _context;
         private readonly IKebabSimulatorServices _KebabSimulatorServices;
-
-        public KebabController(KebabSimulatorContext context, IKebabSimulatorServices kebabSimulatorServices)
+        private readonly IFileServices _fileServices;
+        public KebabController(KebabSimulatorContext context, IKebabSimulatorServices kebabSimulatorServices, IFileServices fileServices)
         {
             _context = context;
             _KebabSimulatorServices = kebabSimulatorServices;
+            _fileServices = fileServices;
         }
 
         public IActionResult Index()
@@ -169,6 +171,7 @@ namespace Kebab_Simulator.Controllers
         {
             var dto = new KebabDto()
             {
+                ID = (Guid)vm.ID,
                 KebabName = vm.KebabName,
                 KebabXP = 0,
                 KebabXPNextLevel = 100,
@@ -201,6 +204,69 @@ namespace Kebab_Simulator.Controllers
             }
             return RedirectToAction("Index", vm);
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var kebab = await _KebabSimulatorServices.DetailsAsync(id);
+
+            if (kebab == null)
+            {
+                return NotFound();
+            };
+            var images = await _context.FilesToDatabase
+                .Where(x => x.KebabID == id)
+                .Select( y => new KebabImageViewModel
+                {
+                    KebabID = y.ID,
+                    ImageID = y.ID,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image  = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+            var vm = new KebabDeleteViewModel();
+
+
+            vm.ID = kebab.ID;
+            vm.KebabName = kebab.KebabName;
+            vm.KebabXP = kebab.KebabXP;
+            vm.KebabXPNextLevel = kebab.KebabXPNextLevel;
+            vm.KebabLevel = kebab.KebabLevel;
+            vm.KebabFoods = (Models.KebabModels.KebabFoods)kebab.KebabFoods;
+            vm.KebabType = (Models.KebabModels.KebabType)kebab.KebabType;
+            vm.KebabBankAccount = kebab.KebabBankAccount;
+            vm.Checkout = kebab.Checkout;
+            vm.KebabStart = kebab.KebabStart;
+            vm.KebabDone = kebab.KebabDone;
+            kebab.KebabStatus = Core.Domain.KebabStatus.Making;
+            vm.Image.AddRange(images);
+            vm.CreatedAt = kebab.CreatedAt;
+            vm.UpdatedAt = DateTime.Now;
+
+            return View(vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var kebabToDelete = await _KebabSimulatorServices.Delete(id);
+            if (kebabToDelete != null) { return RedirectToAction("Index"); }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(KebabImageViewModel vm)
+        {
+            var dto = new FileToDatabaseDto()
+            {
+                ID = vm.ImageID,
+
+            };
+            var iamge = await FileServices.RemoveImageFromDatabase(dto);
+            if (iamge != null) { return RedirectToAction("Index"); }
+            return RedirectToAction("Index");
         }
     }
 }

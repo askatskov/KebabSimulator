@@ -1,18 +1,7 @@
 ﻿@model Kebab_Simulator.Models.KebabModels.KebabCreateViewModel
 
 <div>
-    <form method="post" enctype="multipart/form-data">
-    <input asp-for="CreatedAt" type="hidden" />
-    <input asp-for="UpdatedAt" type="hidden" />
-    <input asp-for="KebabXP" value="0" type="hidden" />
-    <input asp-for="KebabLevel" value="0" type="hidden" />
-    <input asp-for="KebabXPNextLevel" value="100" type="hidden" />
-    <input asp-for="KebabStart" value="Making" type="hidden" />
-    <input asp-for="KebabDone" value="Done" type="hidden" />
-    <input asp-for="KebabStatus" value="Making" type="hidden" />
-
-
-
+    <form method="post" asp-action="Create" enctype="multipart/form-data">
     <div class="form-group-row">
         <label asp-for="KebabName" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
@@ -46,7 +35,7 @@
         </div>
 
     </div>
-        <input asp-action="Create" asp-controller="Kebab" type="submit" class="btn btn-primary" value="Make Kebab" />
+        <input asp-action="Create" asp-controller="kebab" type="submit" class="btn btn-primary" value="Make Kebab" />
 
     <a asp-action="index" class="btn btn-primary">Cancel</a>
 

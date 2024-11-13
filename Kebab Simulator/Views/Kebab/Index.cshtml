@@ -17,6 +17,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Level</th>
+                <th scope="col">BankAccount</th>
                 <th scope="col">Admin Actions</th>
                 
             </tr>
@@ -28,8 +29,16 @@
                     <td>@rowNumber</td>
                     <td>@Kebab.KebabName</td>
                     <td>@Kebab.KebabLevel</td>
+                    <td>@Kebab.KebabBankAccount</td>
                     <td>
-                        <a asp-action="details" asp-controller="kebab" asp-route-id="@Kebab.ID" class="btn btn-info">KebabDetails</a>
+                        <a asp-action="Details" asp-controller="kebab" asp-route-id="@Kebab.ID" class="btn btn-info">KebabDetails</a>
+                        <br />
+                    <td>
+                        <a asp-action="Update" asp-controller="kebab" asp-route-id="@Kebab.ID" class="btn btn-info">KebabConfigure</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="kebab" asp-route-id="@Kebab.ID" class="btn btn-info">DeleteKebab</a>
+                    </td>
                     </td>
                     @*<td>
                        @foreach (var image in Model.Image)

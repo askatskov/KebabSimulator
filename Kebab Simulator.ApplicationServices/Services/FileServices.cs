@@ -2,6 +2,7 @@
 using Kebab_Simulator.Core.Domain.Dto;
 using Kebab_Simulator.Core.Domain.Serviceinterface;
 using Kebab_Simulator.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,23 @@ namespace Kebab_Simulator.ApplicationServices.Services
                     }
                 }
             }
+        }
+        public async Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
+        {
+            var imageID = await _context.FilesToDatabase
+                .FirstOrDefaultAsync(x => x.ID == dto.ID);
+
+            var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" + imageID.ImageData;
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            _context.FilesToDatabase.Remove(imageID);
+            await _context.SaveChangesAsync();
+
+            return null;
+
         }
     }
 }

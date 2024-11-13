@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -95,11 +96,26 @@ namespace Kebab_Simulator.ApplicationServices.Services
             {
                 _fileServices.UploadFilesToDatabase(dto, kebab);
             }
-            await _context.Kebabs.AddAsync(kebab);
+
+            _context.Kebabs.Update(kebab);
             await _context.SaveChangesAsync();
 
             return kebab;
 
         }
+        public async Task<Kebab>Delete(Guid id)
+        {
+            var result = await _context.Kebabs
+                .FirstOrDefaultAsync(x => x.ID == id);
+
+            if (result == null)
+            {
+                return null;
+            }
+            _context.Kebabs.Remove(result);
+            await _context.SaveChangesAsync();
+            return result;
+        }
+
     }
 }

@@ -1,10 +1,9 @@
-﻿
-@model Kebab_Simulator.Models.KebabModels.KebabDetailsViewModel
+﻿@model Kebab_Simulator.Models.KebabModels.KebabDeleteViewModel
 
 <h1> @Html.DisplayFor(model => model.KebabName)</h1>
 
 <div>
-    <h4>I need to make some quick money from kebab. </h4>
+    <h4>The choice is yours. </h4>
     <hr />
     <dl class="row">
         <div class="form-group row">
@@ -12,14 +11,14 @@
             @Html.DisplayFor(model => model.ID)
         </div>
         <div class="form-group row">
-                <label asp-for="KebabName" class="col-sm-2" col-form-label></label>
-                @Html.DisplayFor(model => model.KebabName)
+            <label asp-for="KebabName" class="col-sm-2" col-form-label></label>
+            @Html.DisplayFor(model => model.KebabName)
         </div>
         <div id="imagediv">
-        @foreach (var image in Model.Image)
-        {
-            <partial name="_Images" model="image" />
-        }
+            @foreach (var image in Model.Image)
+            {
+                <partial name="_Images" model="image" />
+            }
         </div>
         <div class="form-group row">
             <label asp-for="KebabXP" class="col-sm-2" col-form-label></label>
@@ -46,5 +45,10 @@
             @Html.DisplayFor(model => model.Checkout)
         </div>
     </dl>
+    <form asp-action="DeleteConfirmation">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </form>
+
     <a asp-action="index" asp-controller="Kebab" class="btn btn-secondary">Go back</a>
 </div>
