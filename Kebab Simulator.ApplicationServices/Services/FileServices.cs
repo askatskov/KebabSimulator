@@ -51,7 +51,6 @@ namespace Kebab_Simulator.ApplicationServices.Services
         {
             var imageID = await _context.FilesToDatabase
                 .FirstOrDefaultAsync(x => x.ID == dto.ID);
-
             var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" + imageID.ImageData;
             if (File.Exists(filePath))
             {
@@ -62,6 +61,7 @@ namespace Kebab_Simulator.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return null;
+
 
         }
     }

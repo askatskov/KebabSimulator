@@ -264,7 +264,7 @@ namespace Kebab_Simulator.Controllers
                 ID = vm.ImageID,
 
             };
-            var iamge = await FileServices.RemoveImageFromDatabase(dto);
+            var iamge = await _fileServices.RemoveImageFromDatabase(dto);
             if (iamge != null) { return RedirectToAction("Index"); }
             return RedirectToAction("Index");
         }
