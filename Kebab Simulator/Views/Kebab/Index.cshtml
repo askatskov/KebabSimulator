@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<Kebab_Simulator.Models.KebabModels.KebabIndexViewModel>
 
-@{ int rowNumber = 1; }
+@{
+    int rowNumber = 1;
+    int currentRow = 1;
+    int currentTile = 1;
+    int tilesInRow = 6;
+}
 <div>
     <a asp-action="Add" asp-controller="Kebab" type="submit" class="btn btn-primary">Go make a kebab to earn money</a>
     <a asp-action="Create" asp-controller="Kebab" type="submit" class="btn btn-primary">Make new character</a>
