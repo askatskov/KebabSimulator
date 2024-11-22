@@ -16,10 +16,10 @@
                 @Html.DisplayFor(model => model.KebabName)
         </div>
         <div id="imagediv">
-        @foreach (var image in Model.Image)
-        {
-            <partial name="_Images" model="image" />
-        }
+            @foreach (var image in Model.Image)
+            {
+                <partial name="_Images" model="image" />
+            }
         </div>
         <div class="form-group row">
             <label asp-for="KebabXP" class="col-sm-2" col-form-label></label>

@@ -6,7 +6,7 @@ using Kebab_Simulator.Models.KebabModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.Intrinsics.X86;
-// kebabcontroller controlls all things with kebab
+
 namespace Kebab_Simulator.Controllers
 {
     public class KebabController : Controller
@@ -89,7 +89,7 @@ namespace Kebab_Simulator.Controllers
 
             if (kebab == null)
             {
-                return NotFound(); // <- TODO; custom partial view with message, kebab is not located
+                return NotFound();
             }
 
             var images = await _context.FilesToDatabase
@@ -100,39 +100,41 @@ namespace Kebab_Simulator.Controllers
                     ImageID = y.ID,
                     ImageData = y.ImageData,
                     ImageTitle = y.ImageTitle,
-                    Image = string.Format("data:image/gif;base64, {0},", Convert.ToBase64String(y.ImageData))
-
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
                 }).ToArrayAsync();
 
-            var vm = new KebabDetailsViewModel();
-            vm.ID = kebab.ID;
-            vm.KebabName = kebab.KebabName;
-            vm.KebabXP = kebab.KebabXP;
-            vm.KebabXPNextLevel = kebab.KebabXPNextLevel;
-            vm.KebabLevel = kebab.KebabLevel;
-            vm.KebabBankAccount = kebab.KebabBankAccount;
-            vm.Checkout = kebab.Checkout;
-            vm.KebabStart = kebab.KebabStart;
-            vm.KebabDone = kebab.KebabDone;
-            kebab.KebabStatus = Core.Domain.KebabStatus.Making;
+            var vm = new KebabDetailsViewModel
+            {
+                ID = kebab.ID,
+                KebabName = kebab.KebabName,
+                KebabXP = kebab.KebabXP,
+                KebabXPNextLevel = kebab.KebabXPNextLevel,
+                KebabLevel = kebab.KebabLevel,
+                KebabBankAccount = kebab.KebabBankAccount,
+                Checkout = kebab.Checkout,
+                KebabStart = kebab.KebabStart,
+                KebabDone = kebab.KebabDone,
+            };
+
             vm.Image.AddRange(images);
 
             return View(vm);
-
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            if (id == null)
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
+
             var kebab = await _KebabSimulatorServices.DetailsAsync(id);
 
             if (kebab == null)
             {
                 return NotFound();
             }
+
             var images = await _context.FilesToDatabase
                 .Where(x => x.KebabID == id)
                 .Select(y => new KebabImageViewModel
@@ -141,111 +143,107 @@ namespace Kebab_Simulator.Controllers
                     ImageID = y.ID,
                     ImageData = y.ImageData,
                     ImageTitle = y.ImageTitle,
-                    Image = string.Format("data:image/gif;base64, {0},", Convert.ToBase64String(y.ImageData))
-
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
                 }).ToArrayAsync();
 
-            var vm = new KebabCreateViewModel();
+            var vm = new KebabCreateViewModel
+            {
+                ID = kebab.ID,
+                KebabName = kebab.KebabName,
+                KebabXP = kebab.KebabXP,
+                KebabXPNextLevel = kebab.KebabXPNextLevel,
+                KebabLevel = kebab.KebabLevel,
+                KebabType = (Models.KebabModels.KebabType)kebab.KebabType,
+                KebabStatus = (Models.KebabModels.KebabStatus)kebab.KebabStatus,
+                KebabBankAccount = kebab.KebabBankAccount,
+                Checkout = kebab.Checkout,
+                KebabStart = kebab.KebabStart,
+                KebabDone = kebab.KebabDone,
+                CreatedAt = kebab.CreatedAt,
+                UpdatedAt = DateTime.Now
+            };
 
-            vm.ID = kebab.ID;
-            vm.KebabName = kebab.KebabName;
-            vm.KebabXP = kebab.KebabXP;
-            vm.KebabXPNextLevel = kebab.KebabXPNextLevel;
-            vm.KebabLevel = kebab.KebabLevel;
-            vm.KebabFoods = (Models.KebabModels.KebabFoods)kebab.KebabFoods;
-            vm.KebabType = (Models.KebabModels.KebabType)kebab.KebabType;
-            vm.KebabBankAccount = kebab.KebabBankAccount;
-            vm.Checkout = kebab.Checkout;
-            vm.KebabStart = kebab.KebabStart;
-            vm.KebabDone = kebab.KebabDone;
-            kebab.KebabStatus = Core.Domain.KebabStatus.Making;
             vm.Image.AddRange(images);
-            vm.CreatedAt = kebab.CreatedAt;
-            vm.UpdatedAt = DateTime.Now;
 
             return View("Update", vm);
-
         }
         [HttpPost]
         public async Task<IActionResult> Update(KebabCreateViewModel vm)
         {
-            var dto = new KebabDto()
+            if (!ModelState.IsValid)
             {
-                ID = (Guid)vm.ID,
+                return View(vm);
+            }
+
+            var dto = new KebabDto
+            {
+                ID = (Guid) vm.ID,
                 KebabName = vm.KebabName,
-                KebabXP = 0,
-                KebabXPNextLevel = 100,
-                KebabLevel = 0,
+                KebabXP = vm.KebabXP,
+                KebabXPNextLevel = vm.KebabXPNextLevel,
+                KebabLevel = vm.KebabLevel,
                 KebabType = (Core.Domain.Dto.KebabType)vm.KebabType,
                 KebabStatus = (Core.Domain.Dto.KebabStatus)vm.KebabStatus,
                 KebabBankAccount = vm.KebabBankAccount,
                 Checkout = vm.Checkout,
                 KebabStart = vm.KebabStart,
                 KebabDone = vm.KebabDone,
-                CreatedAt = DateTime.Now,
+                CreatedAt = vm.CreatedAt,
                 UpdatedAt = DateTime.Now,
                 Files = vm.Files,
-                Image = vm.Image
-                .Select(x => new FileToDatabaseDto
+                Image = vm.Image.Select(x => new FileToDatabaseDto
                 {
                     ID = x.ImageID,
                     ImageData = x.ImageData,
                     ImageTitle = x.ImageTitle,
                     KebabID = x.KebabID,
                 }).ToArray()
-
-
             };
+
             var result = await _KebabSimulatorServices.Update(dto);
 
             if (result != null)
             {
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Index", vm);
 
+            return View(vm);
         }
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
             var kebab = await _KebabSimulatorServices.DetailsAsync(id);
 
             if (kebab == null)
             {
                 return NotFound();
-            };
+            }
+
             var images = await _context.FilesToDatabase
                 .Where(x => x.KebabID == id)
-                .Select( y => new KebabImageViewModel
+                .Select(y => new KebabImageViewModel
                 {
-                    KebabID = y.ID,
+                    KebabID = y.KebabID,
                     ImageID = y.ID,
                     ImageData = y.ImageData,
                     ImageTitle = y.ImageTitle,
-                    Image  = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
                 }).ToArrayAsync();
-            var vm = new KebabDeleteViewModel();
 
+            var vm = new KebabDeleteViewModel
+            {
+                ID = kebab.ID,
+                KebabName = kebab.KebabName,
+                KebabXP = kebab.KebabXP,
+                KebabXPNextLevel = kebab.KebabXPNextLevel,
+                KebabLevel = kebab.KebabLevel,
+                KebabBankAccount = kebab.KebabBankAccount,
+                Checkout = kebab.Checkout,
+                KebabStart = kebab.KebabStart,
+                KebabDone = kebab.KebabDone,
+            };
 
-            vm.ID = kebab.ID;
-            vm.KebabName = kebab.KebabName;
-            vm.KebabXP = kebab.KebabXP;
-            vm.KebabXPNextLevel = kebab.KebabXPNextLevel;
-            vm.KebabLevel = kebab.KebabLevel;
-            vm.KebabFoods = (Models.KebabModels.KebabFoods)kebab.KebabFoods;
-            vm.KebabType = (Models.KebabModels.KebabType)kebab.KebabType;
-            vm.KebabBankAccount = kebab.KebabBankAccount;
-            vm.Checkout = kebab.Checkout;
-            vm.KebabStart = kebab.KebabStart;
-            vm.KebabDone = kebab.KebabDone;
-            kebab.KebabStatus = Core.Domain.KebabStatus.Making;
             vm.Image.AddRange(images);
-            vm.CreatedAt = kebab.CreatedAt;
-            vm.UpdatedAt = DateTime.Now;
 
             return View(vm);
         }
@@ -253,9 +251,15 @@ namespace Kebab_Simulator.Controllers
         public async Task<IActionResult> DeleteConfirmation(Guid id)
         {
             var kebabToDelete = await _KebabSimulatorServices.Delete(id);
-            if (kebabToDelete != null) { return RedirectToAction("Index"); }
+
+            if (kebabToDelete == null)
+            {
+                return NotFound(); 
+            }
+
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public async Task<IActionResult> RemoveImage(KebabImageViewModel vm)
         {
