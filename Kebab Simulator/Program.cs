@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Kebab_Simulator.Security;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
